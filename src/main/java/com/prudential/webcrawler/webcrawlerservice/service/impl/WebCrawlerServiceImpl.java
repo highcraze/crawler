@@ -15,11 +15,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import com.prudential.webcrawler.webcrawlerservice.service.WebCrawlerService;
+import com.prudential.webcrawler.webcrawlerservice.util.Constants;
 
 @Service
 public class WebCrawlerServiceImpl implements WebCrawlerService{
 	
-	private Set<String> scannedUrl = new HashSet<>();
+	private static Set<String> scannedUrl = new HashSet<>();
 	private int i = 0;
 	private Map<String, List<String>> siteMap = new HashMap<>();
 	private List<String> sameDomainUrl = new ArrayList<>();
@@ -42,7 +43,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
 				if(contentType.contains("text/html")) {
 					//This is a valid html url
 					//prudential.co.uk
-					if(url.contains("prudential.co.uk")) {
+					if(url.contains(Constants.SEARCH_QUERY)) {
 						sameDomainUrl.add(url);
 					}
 					
@@ -51,13 +52,12 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
 					Elements questions = document.select("a[href]");
 					for(Element link: questions){
 						url = link.absUrl("href");
-						if(url.contains("prudential.co.uk")) {
+						if(url.contains(Constants.SEARCH_QUERY)) {
 							i++;
 							getCrawlerRawData(link.absUrl("href"));
 						}else if(url != null && !url.equals("")){
 							differentDomainUrl.add(url);
 						}
-							
 					}
 				}else if(!url.equals("")){
 					staticUrl.add(url);
@@ -74,10 +74,4 @@ public class WebCrawlerServiceImpl implements WebCrawlerService{
 		
 	}
 	
-	
-	
-	public static void main(String args []) {
-	//	new WebCrawlerServiceImpl().getCrawlerRawData(url);
-	}
-
 }
