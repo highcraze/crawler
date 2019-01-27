@@ -11,5 +11,5 @@ I'm not sure how long it takes to crawl prudential portal as there are too many 
 
 Scope for improvement provided more time -
 1. I find the application is tightly coupled with the filters provided in the requirement are hard coded into the method. The reason is recursive loop becomes complicated if filters are to be injected into the crawler.
-2. Since crawling an enormous task load balancers like Ribbon, Eureka Naming Servers and Zuul API gateway can be used to create multiple instances of this service.
+2. Since crawling an enormous task load balancers like Ribbon, Eureka Naming Servers and Zuul API gateway can be used to create multiple instances of this service and manage the crawler efficiently.
 3. I have created a local variable to store already scanned urls, a database would be ideal to store them. However some websites like wikipedia often change their content thus there should be some configuartion to rescan these urls. 
